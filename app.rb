@@ -2,21 +2,18 @@ require 'sinatra'
 require 'json'
 require 'base64'
 require 'httparty'
-require 'mongoid'
 require 'geokit'
 require_relative './models/stations'
 
 # Configuration Sharing Web Service
 class UbikeApi < Sinatra::Base
-  Mongoid.load! "mongoid.yml"
-  # station = Station.new(name: 'test',number: 123)
-  # station.save
-  # before do
-  #   Configuration.setup
-  # end
+  
   before do
     content_type 'application/json'
   end
+  # before do
+  #   content_type 'application/json'
+  # end
 
 
   get '/?' do
