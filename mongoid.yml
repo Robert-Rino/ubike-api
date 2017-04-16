@@ -2,3 +2,7 @@ development:
   clients:
     default:
       uri: <%=ENV['MONGO_URL']%>
+production:
+  clients:
+    default:
+      uri: <%=ENV['MONGO_URL']%>
