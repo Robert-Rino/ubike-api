@@ -1,3 +1,3 @@
-require_relative './config/environments.rb'
+require './config/init.rb'
 require './app.rb'
 run UbikeApi
