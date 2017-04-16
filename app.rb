@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'json'
 require 'base64'
-require 'HTTParty'
+require 'httparty'
 require 'mongoid'
 require 'geokit'
 require_relative './models/stations'
