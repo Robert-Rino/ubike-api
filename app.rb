@@ -28,6 +28,7 @@ class UbikeApi < Sinatra::Base
       # print "#{station[1]}\n"
       # Station.new(:name => station[1]["sna"],:sno => station[1]["sno"]).save
       station_arr.push({
+        _id:station[1]["sno"],
         name:station[1]["sna"],
         sno:station[1]["sno"],
         tot:station[1]["tot"].to_i,
@@ -37,6 +38,7 @@ class UbikeApi < Sinatra::Base
         mday:station[1]["mday"].to_i
         })
     end
+    Station.delete_all
     Station.create(station_arr)
     "ok"
   end
@@ -66,20 +68,14 @@ class UbikeApi < Sinatra::Base
 
   get '/v1/ubike-station/update' do
     station_arr = []
-    sorted_h = {}
     response = HTTParty.get('http://data.taipei/youbike')
     stationInfos = JSON.parse(response)["retVal"]
-    batch = [{name:"test1",sbi:10,"tot":20,"lat":25,"lng":100,"mday":12345},{name:"test1",sbi:10,"tot":20,"lat":25,"lng":100,"mday":12345}]
-    Station.create(batch)
-    # Station.each do |station|
-    #   target_sta = stationInfos[station["sno"]]
-    #   if station["sbi"] != target_sta["sbi"]
-    #     station["sbi"] = target_sta["sbi"]
-    #     station["updatetime"] = target_sta["updatetime"]
-    #     station.save
-    #   end
-    # end
-
+    Station.each do |station|
+      target_sta = stationInfos[station["sno"]]
+      station["sbi"] = target_sta["sbi"]
+      station["updatetime"] = Time.now.to_i
+      station.save
+    end
 
     # stationInfos.each do |station|
     #   target_sta = Station.find_by(sno:station[1]["sno"].to_i)
