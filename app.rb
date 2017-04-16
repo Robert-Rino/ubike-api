@@ -8,9 +8,9 @@ require_relative './models/stations'
 # Configuration Sharing Web Service
 class UbikeApi < Sinatra::Base
   enable :logging
-  before do
-    content_type 'application/json'
-  end
+  # before do
+  #   content_type 'application/json'
+  # end
   # before do
   #   content_type 'application/json'
   # end
