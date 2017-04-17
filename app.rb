@@ -68,6 +68,7 @@ class UbikeApi < Sinatra::Base
       target_sta = stationInfos[station["sno"]]
       station["sbi"] = target_sta["sbi"]
       station["updatetime"] = Time.now.to_i
+      station["mday"] = target_sta["mday"].to_i
       station.save
     end
 
