@@ -8,16 +8,10 @@ require_relative './models/stations'
 # Configuration Sharing Web Service
 class UbikeApi < Sinatra::Base
   enable :logging
-  # before do
-  #   content_type 'application/json'
-  # end
-  # before do
-  #   content_type 'application/json'
-  # end
-
 
   get '/?' do
-    'UbikeApi web service is up and running at /api/v1'
+    response = {"response"=>"UbikeApi web service is up and running at /api/v1"}.to_json
+    [200,{'Content-Type' => 'application/json'},response]
   end
 
   get '/v1/ubike-station/init' do
@@ -63,7 +57,7 @@ class UbikeApi < Sinatra::Base
       "code":0,
       "result":station_arr[0..1]
     }
-    body.to_json
+    [200,{'Content-Type' => 'application/json'},body.to_json]
   end
 
   get '/v1/ubike-station/update' do
