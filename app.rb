@@ -64,26 +64,35 @@ class UbikeApi < Sinatra::Base
       [200,body.to_json]
 
     rescue => e
-      status 400
+      status 400,{
+        "code":-3,
+        "result":[]
+      }
       logger.info "FAILED to process '/v1/ubike-station/taipei': #{e.inspect}"
       e.inspect
     end
   end
 
   get '/v1/ubike-station/update' do
-    station_arr = []
-    response = HTTParty.get('http://data.taipei/youbike')
-    stationInfos = JSON.parse(response)["retVal"]
-    Station.each do |station|
-      target_sta = stationInfos[station["sno"]]
-      station["sbi"] = target_sta["sbi"]
-      station["updatetime"] = Time.now.to_i
-      station["mday"] = target_sta["mday"].to_i
-      station["full"] = station[1]["sbi"] == station[1]["tot"] ? true : false,
-      station["empty"] = station[1]["sbi"] == 0 ? true : false
-      station.save
+    begin
+      station_arr = []
+      response = HTTParty.get('http://data.taipei/youbike')
+      stationInfos = JSON.parse(response)["retVal"]
+      Station.each do |station|
+        target_sta = stationInfos[station["sno"]]
+        station["sbi"] = target_sta["sbi"]
+        station["updatetime"] = Time.now.to_i
+        station["mday"] = target_sta["mday"].to_i
+        station["full"] = station["sbi"] == station["tot"] ? true : false
+        station["empty"] = station["sbi"] == 0 ? true : false
+        station.save
+      end
+      status 200
+    rescue => e
+      status 500
+      logger.info "FAILED to process '/v1/ubike-station/taipei': #{e.inspect}"
+      e.inspect
     end
-    'ok'
   end
 
   get '/v1/ubike-station/test' do

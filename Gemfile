@@ -9,3 +9,9 @@ gem 'httparty'
 gem 'mongoid', '~> 6.1.0'
 gem 'geokit'
 gem 'config_env'
+
+group :test do
+  gem 'minitest'
+  gem 'minitest-rg'
+  gem 'rack-test'
+end
