@@ -57,7 +57,7 @@ class UbikeApi < Sinatra::Base
           "code":-2,
           "result":[]
         }
-        halt 400, body.to_json.to_s
+        halt 400, body.to_json
       end
 
       body = SortStation.return_body(user_lat,user_lng)
@@ -65,11 +65,10 @@ class UbikeApi < Sinatra::Base
 
     rescue => e
       logger.info "FAILED to process '/v1/ubike-station/taipei': #{e.inspect}"
-      e.inspect
       halt 400, {
         "code":-3,
         "result":[]
-      }.to_json.to_s
+      }.to_json
     end
   end
 end
