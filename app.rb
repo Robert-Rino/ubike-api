@@ -41,10 +41,10 @@ class UbikeApi < Sinatra::Base
     content_type 'application/json'
 
     begin
-      user_lan = params['lan'].to_f
+      user_lat = params['lat'].to_f
       user_lng = params['lng'].to_f
 
-      if (user_lan.abs > 90) or (user_lng.abs > 180)
+      if (user_lat.abs > 90) or (user_lng.abs > 180)
         body = {
           "code":-1,
           "result":[]
@@ -52,7 +52,7 @@ class UbikeApi < Sinatra::Base
         halt 400, body.to_json
       end
 
-      if !IsInTaipei.inTaipei(user_lan,user_lng)
+      if !IsInTaipei.inTaipei(user_lat,user_lng)
         body = {
           "code":-2,
           "result":[]
@@ -60,7 +60,7 @@ class UbikeApi < Sinatra::Base
         halt 400, body.to_json.to_s
       end
 
-      body = SortStation.return_body(user_lan,user_lng)
+      body = SortStation.return_body(user_lat,user_lng)
       [200,body.to_json]
 
     rescue => e
@@ -72,12 +72,4 @@ class UbikeApi < Sinatra::Base
       }.to_json.to_s
     end
   end
-
-  get '/v1/ubike-station/test' do
-    user_lan = params['lan'].to_f
-    user_lng = params['lng'].to_f
-    print IsInTaipei.inTaipei(user_lan,user_lng)
-    'ok'
-  end
-
 end
