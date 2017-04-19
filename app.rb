@@ -57,41 +57,19 @@ class UbikeApi < Sinatra::Base
           "code":-2,
           "result":[]
         }
-        halt 400, body.to_json
+        halt 400, body.to_json.to_s
       end
 
       body = SortStation.return_body(user_lan,user_lng)
       [200,body.to_json]
 
     rescue => e
-      status 400,{
+      logger.info "FAILED to process '/v1/ubike-station/taipei': #{e.inspect}"
+      e.inspect
+      halt 400, {
         "code":-3,
         "result":[]
-      }
-      logger.info "FAILED to process '/v1/ubike-station/taipei': #{e.inspect}"
-      e.inspect
-    end
-  end
-
-  get '/v1/ubike-station/update' do
-    begin
-      station_arr = []
-      response = HTTParty.get('http://data.taipei/youbike')
-      stationInfos = JSON.parse(response)["retVal"]
-      Station.each do |station|
-        target_sta = stationInfos[station["sno"]]
-        station["sbi"] = target_sta["sbi"]
-        station["updatetime"] = Time.now.to_i
-        station["mday"] = target_sta["mday"].to_i
-        station["full"] = station["sbi"] == station["tot"] ? true : false
-        station["empty"] = station["sbi"] == 0 ? true : false
-        station.save
-      end
-      status 200
-    rescue => e
-      status 500
-      logger.info "FAILED to process '/v1/ubike-station/taipei': #{e.inspect}"
-      e.inspect
+      }.to_json.to_s
     end
   end
 
