@@ -13,7 +13,7 @@ class UbikeApi < Sinatra::Base
     [200,{'Content-Type' => 'application/json'},response]
   end
 
-  get '/v1/ubike-station/init' do
+  post '/v1/ubike-station/init' do
     station_arr = []
     response = HTTParty.get('http://data.taipei/youbike')
     stationInfos = JSON.parse(response)["retVal"]
