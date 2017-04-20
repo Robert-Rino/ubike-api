@@ -18,7 +18,7 @@
   "result": $result_list
   }`
 
->`$status_code`:
+>` $status_code:`
 * 1: all ubike stations are full
 * 0: OK
 * -1: invalid latitude or longitude
