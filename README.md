@@ -19,11 +19,11 @@
   }`
 
 >` $status_code:`
-* 1: all ubike stations are full
-* 0: OK
-* -1: invalid latitude or longitude
-* -2: given location not in Taipei City
-* -3: system error
+- 1: all ubike stations are full
+- 0: OK
+- -1: invalid latitude or longitude
+- -2: given location not in Taipei City
+- -3: system error
 
 ## Install
 
