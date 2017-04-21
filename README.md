@@ -1,6 +1,11 @@
 # ubike-api
 [ ![Codeship Status for Robert-Rino/ubike-api](https://app.codeship.com/projects/d46a3910-07f2-0135-7721-4ec6dc541603/status?branch=master)](https://app.codeship.com/projects/214211)
 
+# Architecture
+
+![architecture](architecture.png)
+
+- worker will updates data every 10 minuts
 #### Application Routes
 
 - GET `/`: root route
