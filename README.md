@@ -35,7 +35,7 @@
 Install this API required gems
 
 ```
-$ bundle Install
+$ bundle install
 ```
 
 ## Testing
